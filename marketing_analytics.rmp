@@ -831,7 +831,7 @@
         <parameter key="use_local_random_seed" value="false"/>
         <parameter key="local_random_seed" value="1992"/>
       </operator>
-      <operator activated="false" class="concurrency:optimize_parameters_grid" compatibility="9.9.000" expanded="true" height="145" name="Optimized Clustering" width="90" x="45" y="187">
+      <operator activated="false" class="concurrency:optimize_parameters_grid" compatibility="9.9.000" expanded="true" height="145" name="Optimized Clustering" width="90" x="246" y="544">
         <list key="parameters">
           <parameter key="Clustering.mixed_measure" value="MixedEuclideanDistance"/>
           <parameter key="Clustering.determine_good_start_values" value="true"/>

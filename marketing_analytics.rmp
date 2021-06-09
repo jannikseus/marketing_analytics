@@ -12,8 +12,59 @@
     <parameter key="process_duration_for_mail" value="30"/>
     <parameter key="encoding" value="SYSTEM"/>
     <process expanded="true">
-      <operator activated="true" class="retrieve" compatibility="9.9.000" expanded="true" height="68" name="Retrieve marketing_data" width="90" x="45" y="34">
-        <parameter key="repository_entry" value="//Local Repository/data/marketing_data"/>
+      <operator activated="true" class="read_csv" compatibility="9.9.000" expanded="true" height="68" name="Read CSV" width="90" x="45" y="34">
+        <parameter key="csv_file" value="/Users/jannik/Documents/Studium/Sem06_SS21/Web_und_Social_Media_Mining/Repo/marketing_analytics/res/marketing_data.csv"/>
+        <parameter key="column_separators" value=","/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="true"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="starting_row" value="1"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="infinity_representation" value=""/>
+        <parameter key="date_format" value="MM/dd/yyyy"/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="UTF-8"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="ID.true.integer.id"/>
+          <parameter key="1" value="Year_Birth.true.integer.attribute"/>
+          <parameter key="2" value="Education.true.polynominal.attribute"/>
+          <parameter key="3" value="Marital_Status.true.polynominal.attribute"/>
+          <parameter key="4" value="Income .true.polynominal.attribute"/>
+          <parameter key="5" value="Kidhome.true.polynominal.attribute"/>
+          <parameter key="6" value="Teenhome.true.polynominal.attribute"/>
+          <parameter key="7" value="Dt_Customer.true.date.attribute"/>
+          <parameter key="8" value="Recency.true.integer.attribute"/>
+          <parameter key="9" value="MntWines.true.integer.attribute"/>
+          <parameter key="10" value="MntFruits.true.integer.attribute"/>
+          <parameter key="11" value="MntMeatProducts.true.integer.attribute"/>
+          <parameter key="12" value="MntFishProducts.true.integer.attribute"/>
+          <parameter key="13" value="MntSweetProducts.true.integer.attribute"/>
+          <parameter key="14" value="MntGoldProds.true.integer.attribute"/>
+          <parameter key="15" value="NumDealsPurchases.true.integer.attribute"/>
+          <parameter key="16" value="NumWebPurchases.true.integer.attribute"/>
+          <parameter key="17" value="NumCatalogPurchases.true.integer.attribute"/>
+          <parameter key="18" value="NumStorePurchases.true.integer.attribute"/>
+          <parameter key="19" value="NumWebVisitsMonth.true.integer.attribute"/>
+          <parameter key="20" value="AcceptedCmp3.true.binominal.attribute"/>
+          <parameter key="21" value="AcceptedCmp4.true.binominal.attribute"/>
+          <parameter key="22" value="AcceptedCmp5.true.binominal.attribute"/>
+          <parameter key="23" value="AcceptedCmp1.true.binominal.attribute"/>
+          <parameter key="24" value="AcceptedCmp2.true.binominal.attribute"/>
+          <parameter key="25" value="Response.true.binominal.label"/>
+          <parameter key="26" value="Complain.true.binominal.attribute"/>
+          <parameter key="27" value="Country.true.polynominal.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
       </operator>
       <operator activated="true" class="subprocess" compatibility="9.9.000" expanded="true" height="82" name="Pre-Processing" width="90" x="179" y="34">
         <process expanded="true">
@@ -41,7 +92,7 @@
               </operator>
               <operator activated="true" class="replace" compatibility="9.9.000" expanded="true" height="82" name="Replace Comma" width="90" x="246" y="34">
                 <parameter key="attribute_filter_type" value="single"/>
-                <parameter key="attribute" value="Income "/>
+                <parameter key="attribute" value="Income"/>
                 <parameter key="attributes" value=""/>
                 <parameter key="use_except_expression" value="false"/>
                 <parameter key="value_type" value="nominal"/>
@@ -56,7 +107,7 @@
               </operator>
               <operator activated="true" class="parse_numbers" compatibility="9.9.000" expanded="true" height="82" name="Replace Dot" width="90" x="380" y="34">
                 <parameter key="attribute_filter_type" value="single"/>
-                <parameter key="attribute" value="Income "/>
+                <parameter key="attribute" value="Income"/>
                 <parameter key="attributes" value=""/>
                 <parameter key="use_except_expression" value="false"/>
                 <parameter key="value_type" value="nominal"/>
@@ -85,7 +136,7 @@
           </operator>
           <operator activated="true" class="subprocess" compatibility="9.9.000" expanded="true" height="82" name="Set Attribute Types" width="90" x="179" y="34">
             <process expanded="true">
-              <operator activated="true" class="numerical_to_polynominal" compatibility="9.9.000" expanded="true" height="82" name="ID-&gt;Polynominal" width="90" x="45" y="34">
+              <operator activated="false" class="numerical_to_polynominal" compatibility="9.9.000" expanded="true" height="82" name="ID-&gt;Polynominal" width="90" x="45" y="34">
                 <parameter key="attribute_filter_type" value="single"/>
                 <parameter key="attribute" value="ID"/>
                 <parameter key="attributes" value=""/>
@@ -104,7 +155,7 @@
                 <parameter key="keep_old_attribute" value="false"/>
                 <parameter key="time_offset" value="0"/>
               </operator>
-              <operator activated="false" class="format_numbers" compatibility="9.9.000" expanded="true" height="82" name="Income-&gt;Currency" width="90" x="313" y="34">
+              <operator activated="false" class="format_numbers" compatibility="9.9.000" expanded="true" height="82" name="Income-&gt;Currency" width="90" x="447" y="34">
                 <parameter key="attribute_filter_type" value="single"/>
                 <parameter key="attribute" value="Income "/>
                 <parameter key="attributes" value=""/>
@@ -121,7 +172,7 @@
                 <parameter key="locale" value="English (United States)"/>
                 <parameter key="use_grouping" value="false"/>
               </operator>
-              <operator activated="true" class="numerical_to_binominal" compatibility="9.9.000" expanded="true" height="82" name="Kidhome-&gt;Binom." width="90" x="447" y="34">
+              <operator activated="false" class="numerical_to_binominal" compatibility="9.9.000" expanded="true" height="82" name="Kidhome-&gt;Binom." width="90" x="581" y="34">
                 <parameter key="attribute_filter_type" value="single"/>
                 <parameter key="attribute" value="Kidhome"/>
                 <parameter key="attributes" value=""/>
@@ -137,7 +188,7 @@
                 <parameter key="min" value="0.0"/>
                 <parameter key="max" value="0.0"/>
               </operator>
-              <operator activated="true" class="numerical_to_binominal" compatibility="9.9.000" expanded="true" height="82" name="Teenhome-&gt;Binom." width="90" x="581" y="34">
+              <operator activated="false" class="numerical_to_binominal" compatibility="9.9.000" expanded="true" height="82" name="Teenhome-&gt;Binom." width="90" x="715" y="34">
                 <parameter key="attribute_filter_type" value="single"/>
                 <parameter key="attribute" value="Teenhome"/>
                 <parameter key="attributes" value=""/>
@@ -153,12 +204,12 @@
                 <parameter key="min" value="0.0"/>
                 <parameter key="max" value="0.0"/>
               </operator>
-              <operator activated="false" class="numerical_to_date" compatibility="9.9.000" expanded="true" height="82" name="Dt_Customer-&gt;Date" width="90" x="715" y="34">
+              <operator activated="false" class="numerical_to_date" compatibility="9.9.000" expanded="true" height="82" name="Dt_Customer-&gt;Date" width="90" x="849" y="34">
                 <parameter key="attribute_name" value="AcceptedCmp2F"/>
                 <parameter key="keep_old_attribute" value="false"/>
                 <parameter key="time_offset" value="0"/>
               </operator>
-              <operator activated="false" class="format_numbers" compatibility="9.9.000" expanded="true" height="82" name="MntX-&gt;Currency" width="90" x="849" y="34">
+              <operator activated="false" class="format_numbers" compatibility="9.9.000" expanded="true" height="82" name="MntX-&gt;Currency" width="90" x="983" y="34">
                 <parameter key="attribute_filter_type" value="subset"/>
                 <parameter key="attribute" value="Income "/>
                 <parameter key="attributes" value="MntFruits|MntGoldProds|MntMeatProducts|MntSweetProducts|MntWines"/>
@@ -175,7 +226,7 @@
                 <parameter key="locale" value="English (United States)"/>
                 <parameter key="use_grouping" value="false"/>
               </operator>
-              <operator activated="true" class="numerical_to_binominal" compatibility="9.9.000" expanded="true" height="82" name="Campaigns-&gt;Binom." width="90" x="983" y="34">
+              <operator activated="false" class="numerical_to_binominal" compatibility="9.9.000" expanded="true" height="82" name="Campaigns-&gt;Binom." width="90" x="1117" y="34">
                 <parameter key="attribute_filter_type" value="subset"/>
                 <parameter key="attribute" value=""/>
                 <parameter key="attributes" value="AcceptedCmp1|AcceptedCmp2|AcceptedCmp3|AcceptedCmp4|AcceptedCmp5|Response"/>
@@ -191,29 +242,47 @@
                 <parameter key="min" value="0.0"/>
                 <parameter key="max" value="0.0"/>
               </operator>
-              <connect from_port="in 1" to_op="ID-&gt;Polynominal" to_port="example set input"/>
-              <connect from_op="ID-&gt;Polynominal" from_port="example set output" to_op="Kidhome-&gt;Binom." to_port="example set input"/>
-              <connect from_op="Kidhome-&gt;Binom." from_port="example set output" to_op="Teenhome-&gt;Binom." to_port="example set input"/>
-              <connect from_op="Teenhome-&gt;Binom." from_port="example set output" to_op="Campaigns-&gt;Binom." to_port="example set input"/>
-              <connect from_op="Campaigns-&gt;Binom." from_port="example set output" to_port="out 1"/>
+              <operator activated="false" class="nominal_to_numerical" compatibility="9.9.000" expanded="true" height="103" name="Polynomial-&gt;Numeric" width="90" x="313" y="34">
+                <parameter key="return_preprocessing_model" value="false"/>
+                <parameter key="create_view" value="false"/>
+                <parameter key="attribute_filter_type" value="single"/>
+                <parameter key="attribute" value="Income"/>
+                <parameter key="attributes" value=""/>
+                <parameter key="use_except_expression" value="false"/>
+                <parameter key="value_type" value="nominal"/>
+                <parameter key="use_value_type_exception" value="false"/>
+                <parameter key="except_value_type" value="file_path"/>
+                <parameter key="block_type" value="single_value"/>
+                <parameter key="use_block_type_exception" value="false"/>
+                <parameter key="except_block_type" value="single_value"/>
+                <parameter key="invert_selection" value="false"/>
+                <parameter key="include_special_attributes" value="false"/>
+                <parameter key="coding_type" value="unique integers"/>
+                <parameter key="use_comparison_groups" value="false"/>
+                <list key="comparison_groups"/>
+                <parameter key="unexpected_value_handling" value="all 0 and warning"/>
+                <parameter key="use_underscore_in_name" value="false"/>
+              </operator>
+              <connect from_port="in 1" to_port="out 1"/>
               <portSpacing port="source_in 1" spacing="0"/>
               <portSpacing port="source_in 2" spacing="0"/>
               <portSpacing port="sink_out 1" spacing="0"/>
               <portSpacing port="sink_out 2" spacing="0"/>
-              <description align="center" color="yellow" colored="false" height="160" resized="true" width="143" x="10" y="130">Since we do not want to use arithmetic operations on the attribute ID, it is safer/better practice to set its type to 'polynomial'</description>
-              <description align="center" color="yellow" colored="false" height="230" resized="true" width="125" x="840" y="126">MntX, e.g. MntGoldProduct is weirdly given as the amount spent on something, not the number of items bought&lt;br&gt;which is why we could transform these attributes' type into a currency.</description>
-              <description align="center" color="yellow" colored="false" height="72" resized="true" width="99" x="708" y="133">Not a necessary transformation.&lt;br/&gt;</description>
-              <description align="center" color="yellow" colored="false" height="72" resized="false" width="99" x="310" y="127">Not a necessary transformation.&lt;br/&gt;</description>
-              <description align="center" color="yellow" colored="false" height="72" resized="false" width="99" x="181" y="127">Not a necessary transformation.&lt;br/&gt;</description>
-              <description align="center" color="yellow" colored="false" height="74" resized="true" width="233" x="443" y="127">2-alternative attributes are binomial:&lt;br/&gt;kid(yes/no) - teen(yes/no)</description>
-              <description align="center" color="yellow" colored="false" height="125" resized="true" width="126" x="973" y="130">2-alternative attributes are binomial:&lt;br&gt;Campaign was either accepted (1) or not (0)</description>
-              <description align="center" color="red" colored="true" height="105" resized="false" width="180" x="465" y="213">das ist nicht binominal</description>
+              <description align="center" color="yellow" colored="false" height="160" resized="true" width="143" x="10" y="146">Since we do not want to use arithmetic operations on the attribute ID, it is safer/better practice to set its type to 'polynomial'</description>
+              <description align="center" color="yellow" colored="false" height="252" resized="true" width="141" x="956" y="151">MntX, e.g. MntGoldProduct is weirdly given as the amount spent on something, not the number of items bought&lt;br&gt;which is why we could transform these attributes' type into a currency.</description>
+              <description align="center" color="yellow" colored="false" height="72" resized="true" width="99" x="839" y="150">Not a necessary transformation.&lt;br/&gt;</description>
+              <description align="center" color="yellow" colored="false" height="72" resized="false" width="99" x="444" y="152">Not a necessary transformation.&lt;br/&gt;</description>
+              <description align="center" color="yellow" colored="false" height="72" resized="false" width="99" x="181" y="145">Not a necessary transformation.&lt;br/&gt;</description>
+              <description align="center" color="yellow" colored="false" height="74" resized="true" width="233" x="577" y="152">2-alternative attributes are binomial:&lt;br/&gt;kid(yes/no) - teen(yes/no)</description>
+              <description align="center" color="yellow" colored="false" height="125" resized="true" width="126" x="1109" y="150">2-alternative attributes are binomial:&lt;br&gt;Campaign was either accepted (1) or not (0)</description>
+              <description align="center" color="red" colored="true" height="53" resized="true" width="156" x="609" y="246">not binomial!</description>
+              <description align="center" color="yellow" colored="false" height="102" resized="true" width="108" x="304" y="150">Parses the formatted Income into Numeric.</description>
             </process>
           </operator>
           <operator activated="true" class="subprocess" compatibility="9.9.000" expanded="true" height="82" name="Label Attributes" width="90" x="313" y="34">
             <process expanded="true">
               <operator activated="true" class="set_role" compatibility="9.9.000" expanded="true" height="82" name="Response as label" width="90" x="112" y="34">
-                <parameter key="attribute_name" value="ID"/>
+                <parameter key="attribute_name" value="Response"/>
                 <parameter key="target_role" value="label"/>
                 <list key="set_additional_roles"/>
               </operator>
@@ -253,7 +322,7 @@
                 <parameter key="condition_class" value="custom_filters"/>
                 <parameter key="invert_filter" value="false"/>
                 <list key="filters_list">
-                  <parameter key="filters_entry_key" value="Income .lt.666666"/>
+                  <parameter key="filters_entry_key" value="Income.lt.666666"/>
                 </list>
                 <parameter key="filters_logic_and" value="true"/>
                 <parameter key="filters_check_metadata" value="true"/>
@@ -303,7 +372,7 @@
               <portSpacing port="sink_out 2" spacing="0"/>
               <description align="left" color="yellow" colored="false" height="94" resized="true" width="135" x="21" y="163">3 outliers:&lt;br&gt;1893, 1899, 1900&lt;br&gt;&lt;br&gt;next: 1940 (is okay)</description>
               <description align="left" color="yellow" colored="false" height="164" resized="true" width="143" x="221" y="161">1 big outlier:&lt;br&gt;$666,666.00&lt;br&gt;&lt;br&gt;multiple smaller outliers:&lt;br&gt;slightly above $100,000.00&lt;br&gt;(not removed)</description>
-              <description align="left" color="blue" colored="true" height="287" resized="true" width="232" x="10" y="373">No outliers:&lt;br&gt;&lt;br&gt;Dt_Customers&lt;br&gt;(evenly distributed '12 -'14)&lt;br&gt;&lt;br&gt;Recency&lt;br&gt;(evenly distributed 0-99)&lt;br&gt;&lt;br&gt;MntFishProducts, MntFruits:&lt;br&gt;no real outliers.&lt;br&gt;&lt;br&gt;NumDealsPurchases:&lt;br&gt;no real outliers, just not so dense when above 4</description>
+              <description align="left" color="yellow" colored="true" height="287" resized="true" width="232" x="10" y="373">No outliers:&lt;br&gt;&lt;br&gt;Dt_Customers&lt;br&gt;(evenly distributed '12 -'14)&lt;br&gt;&lt;br&gt;Recency&lt;br&gt;(evenly distributed 0-99)&lt;br&gt;&lt;br&gt;MntFishProducts, MntFruits:&lt;br&gt;no real outliers.&lt;br&gt;&lt;br&gt;NumDealsPurchases:&lt;br&gt;no real outliers, just not so dense when above 4</description>
               <description align="left" color="yellow" colored="false" height="278" resized="false" width="135" x="435" y="162">multiple outliers:&lt;br&gt;&lt;br&gt;MntGoldProds:&lt;br&gt;&amp;gt; 249&lt;br&gt;&lt;br&gt;MntMeatProds:&lt;br&gt;&amp;gt; 984&lt;br&gt;&lt;br&gt;MntSweetProds&lt;br&gt;&amp;gt; 198&lt;br&gt;&lt;br&gt;MntWines&lt;br&gt;maybe &amp;gt; 1400 (not removed)</description>
               <description align="left" color="yellow" colored="false" height="155" resized="true" width="148" x="621" y="163">multiple outliers:&lt;br&gt;&lt;br&gt;NumCatalogPurchases:&lt;br&gt;&amp;gt; 21&lt;br&gt;&lt;br&gt;NumWebPurchases&lt;br&gt;&amp;gt; 22</description>
               <description align="left" color="yellow" colored="false" height="70" resized="true" width="158" x="821" y="165">Country 'ME' only appears three times.&lt;br&gt;-&amp;gt; not representative</description>
@@ -341,6 +410,7 @@
               <portSpacing port="source_in 2" spacing="0"/>
               <portSpacing port="sink_out 1" spacing="0"/>
               <portSpacing port="sink_out 2" spacing="0"/>
+              <description align="left" color="yellow" colored="true" height="120" resized="true" width="304" x="109" y="150">probably not neccessary, but we want to make sure that:&lt;br/&gt;- we don't use any duplicates or&lt;br/&gt;- train our model later with missing values.</description>
             </process>
           </operator>
           <operator activated="true" class="subprocess" compatibility="9.9.000" expanded="true" height="82" name="Discretize Attributes" width="90" x="715" y="34">
@@ -371,7 +441,7 @@
                 <parameter key="return_preprocessing_model" value="false"/>
                 <parameter key="create_view" value="false"/>
                 <parameter key="attribute_filter_type" value="single"/>
-                <parameter key="attribute" value="Income "/>
+                <parameter key="attribute" value="Income"/>
                 <parameter key="attributes" value="Income |MntFishProducts|MntFruits|MntGoldProds|MntMeatProducts|MntSweetProducts|MntWines|NumCatalogPurchases|NumDealsPurchases|NumStorePurchases|NumWebPurchases|NumWebVisitsMonth|Recency|Year_Birth"/>
                 <parameter key="use_except_expression" value="false"/>
                 <parameter key="value_type" value="numeric"/>
@@ -693,11 +763,11 @@
               <portSpacing port="source_in 2" spacing="0"/>
               <portSpacing port="sink_out 1" spacing="0"/>
               <portSpacing port="sink_out 2" spacing="0"/>
-              <description align="left" color="yellow" colored="false" height="445" resized="true" width="212" x="36" y="190">After preprocessing we got age Year_Birth in interval [1940, 1996]&lt;br&gt;&lt;br&gt;adv_age: (-inf)-1959 :&lt;br&gt;up to +inf years&lt;br&gt;&lt;br&gt;adult: 1960-1979&lt;br&gt;up to 59 years&lt;br&gt;&lt;br&gt;mature: 1980-1989&lt;br&gt;up to 39 years&lt;br&gt;&lt;br&gt;young_mat: 1990-(inf)&lt;br&gt;up to 29 years&lt;br&gt;&lt;br&gt;(assuming the current year is 2019 (dataset release))&lt;br&gt;&lt;br&gt;min(Year_Birth) = 1940&lt;br&gt;max(Year_Birth) = 1996&lt;br/&gt;so we could exchange inf/-inf for them.</description>
-              <description align="left" color="yellow" colored="false" height="169" resized="true" width="119" x="297" y="197">bottom: 0-25k&lt;br&gt;low: 25-50k&lt;br&gt;middle: 50-75k&lt;br&gt;high: 75-100k&lt;br&gt;top: &amp;gt;100k&lt;br&gt;&lt;br&gt;maybe adjust first section.&lt;br&gt;</description>
-              <description align="left" color="yellow" colored="false" height="141" resized="true" width="128" x="501" y="188">Partitioning in quarters because these are the timespans (most) companies are calculating with.</description>
-              <description align="left" color="yellow" colored="false" height="72" resized="true" width="116" x="711" y="195">Optional, maybe not so smart to do this.</description>
-              <description align="left" color="yellow" colored="false" height="133" resized="true" width="142" x="912" y="162">Optional, maybe not so smart to do this.&lt;br/&gt;&lt;br&gt;We have very few datapoints in these intervals</description>
+              <description align="left" color="yellow" colored="false" height="445" resized="true" width="212" x="34" y="170">After preprocessing we got age Year_Birth in interval [1940, 1996]&lt;br&gt;&lt;br&gt;adv_age: (-inf)-1959 :&lt;br&gt;up to +inf years&lt;br&gt;&lt;br&gt;adult: 1960-1979&lt;br&gt;up to 59 years&lt;br&gt;&lt;br&gt;mature: 1980-1989&lt;br&gt;up to 39 years&lt;br&gt;&lt;br&gt;young_mat: 1990-(inf)&lt;br&gt;up to 29 years&lt;br&gt;&lt;br&gt;(assuming the current year is 2019 (dataset release))&lt;br&gt;&lt;br&gt;min(Year_Birth) = 1940&lt;br&gt;max(Year_Birth) = 1996&lt;br/&gt;so we could exchange inf/-inf for them.</description>
+              <description align="left" color="yellow" colored="false" height="169" resized="true" width="119" x="295" y="170">bottom: 0-25k&lt;br&gt;low: 25-50k&lt;br&gt;middle: 50-75k&lt;br&gt;high: 75-100k&lt;br&gt;top: &amp;gt;100k&lt;br&gt;&lt;br&gt;maybe adjust first section.&lt;br&gt;</description>
+              <description align="left" color="yellow" colored="false" height="147" resized="true" width="231" x="444" y="172">Partitioning in quarters because these are the timespans (most) companies are calculating with.</description>
+              <description align="left" color="yellow" colored="false" height="72" resized="true" width="116" x="713" y="174">Maybe not so smart to do this.</description>
+              <description align="left" color="yellow" colored="false" height="133" resized="true" width="142" x="912" y="162">Maybe not so smart to do this.&lt;br&gt;&lt;br&gt;We have very few datapoints in these intervals</description>
             </process>
           </operator>
           <connect from_port="in 1" to_op="Syntactical Fixes" to_port="in 1"/>
@@ -711,11 +781,57 @@
           <portSpacing port="source_in 2" spacing="0"/>
           <portSpacing port="sink_out 1" spacing="0"/>
           <portSpacing port="sink_out 2" spacing="0"/>
-          <description align="left" color="blue" colored="true" height="221" resized="false" width="180" x="403" y="139">Another option would be to let RapidMiner detect and remove outliers&lt;br&gt;(e.g. with euclidian distance approach).&lt;br&gt;&lt;br&gt;Since our dataset is not that big that we couldn't do it manually,&lt;br&gt;it's probably more consistent to to it this way.</description>
+          <description align="left" color="yellow" colored="true" height="221" resized="false" width="180" x="403" y="139">Another option would be to let RapidMiner detect and remove outliers&lt;br&gt;(e.g. with euclidian distance approach).&lt;br&gt;&lt;br&gt;Since our dataset is not that big that we couldn't do it manually,&lt;br&gt;it's probably more consistent to do it this way.</description>
           <description align="left" color="yellow" colored="false" height="241" resized="true" width="170" x="688" y="138">Discretizing always gives us a nominal output.&lt;br&gt;&lt;br&gt;RapidMiner does not really distinguish between nominal and polynomial even if polynomial should be a sub-type of nominal.&lt;br&gt;&lt;br&gt;Nevertheless, now we can use the attributes as polynomial attributes.</description>
+          <description align="left" color="yellow" colored="false" height="231" resized="true" width="135" x="158" y="136">Mostly not neccessary;&lt;br&gt;Done using 'edit list' in 'read csv' operator.&lt;br&gt;&lt;br&gt;The only thing that had to be done here was formatting the malformed income column.</description>
         </process>
       </operator>
-      <operator activated="true" class="concurrency:optimize_parameters_grid" compatibility="9.9.000" expanded="true" height="166" name="Optimized Clustering" width="90" x="313" y="34">
+      <operator activated="false" class="normalize" compatibility="9.9.000" expanded="true" height="103" name="Normalize" width="90" x="313" y="34">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="all"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="numeric"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="real"/>
+        <parameter key="block_type" value="value_series"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_series_end"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="method" value="Z-transformation"/>
+        <parameter key="min" value="0.0"/>
+        <parameter key="max" value="1.0"/>
+        <parameter key="allow_negative_values" value="false"/>
+      </operator>
+      <operator activated="true" class="concurrency:k_means" compatibility="9.9.000" expanded="true" height="82" name="k-Means Clustering" width="90" x="447" y="34">
+        <parameter key="add_cluster_attribute" value="true"/>
+        <parameter key="add_as_label" value="false"/>
+        <parameter key="remove_unlabeled" value="false"/>
+        <parameter key="k" value="4"/>
+        <parameter key="max_runs" value="10"/>
+        <parameter key="determine_good_start_values" value="true"/>
+        <parameter key="measure_types" value="MixedMeasures"/>
+        <parameter key="mixed_measure" value="MixedEuclideanDistance"/>
+        <parameter key="nominal_measure" value="NominalDistance"/>
+        <parameter key="numerical_measure" value="EuclideanDistance"/>
+        <parameter key="divergence" value="SquaredEuclideanDistance"/>
+        <parameter key="kernel_type" value="radial"/>
+        <parameter key="kernel_gamma" value="1.0"/>
+        <parameter key="kernel_sigma1" value="1.0"/>
+        <parameter key="kernel_sigma2" value="0.0"/>
+        <parameter key="kernel_sigma3" value="2.0"/>
+        <parameter key="kernel_degree" value="3.0"/>
+        <parameter key="kernel_shift" value="1.0"/>
+        <parameter key="kernel_a" value="1.0"/>
+        <parameter key="kernel_b" value="0.0"/>
+        <parameter key="max_optimization_steps" value="100"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+      </operator>
+      <operator activated="false" class="concurrency:optimize_parameters_grid" compatibility="9.9.000" expanded="true" height="145" name="Optimized Clustering" width="90" x="45" y="187">
         <list key="parameters">
           <parameter key="Clustering.mixed_measure" value="MixedEuclideanDistance"/>
           <parameter key="Clustering.determine_good_start_values" value="true"/>
@@ -727,12 +843,35 @@
         <parameter key="synchronize" value="false"/>
         <parameter key="enable_parallel_execution" value="true"/>
         <process expanded="true">
-          <operator activated="true" class="multiply" compatibility="9.9.000" expanded="true" height="103" name="Multiply" width="90" x="112" y="34"/>
-          <operator activated="true" class="concurrency:k_means" compatibility="9.9.000" expanded="true" height="82" name="Clustering" width="90" x="313" y="34">
+          <operator activated="false" class="model_simulator:cluster_model_visualizer" compatibility="9.9.000" expanded="true" height="103" name="Cluster Model Visualizer" width="90" x="581" y="544"/>
+          <operator activated="true" class="split_data" compatibility="9.9.000" expanded="true" height="103" name="Split Data" width="90" x="45" y="34">
+            <enumeration key="partitions">
+              <parameter key="ratio" value="0.8"/>
+              <parameter key="ratio" value="0.2"/>
+            </enumeration>
+            <parameter key="sampling_type" value="automatic"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="1992"/>
+          </operator>
+          <operator activated="true" class="select_attributes" compatibility="9.9.000" expanded="true" height="82" name="Unlabelled Data" width="90" x="179" y="238">
+            <parameter key="attribute_filter_type" value="single"/>
+            <parameter key="attribute" value="Response"/>
+            <parameter key="attributes" value=""/>
+            <parameter key="use_except_expression" value="false"/>
+            <parameter key="value_type" value="attribute_value"/>
+            <parameter key="use_value_type_exception" value="false"/>
+            <parameter key="except_value_type" value="time"/>
+            <parameter key="block_type" value="attribute_block"/>
+            <parameter key="use_block_type_exception" value="false"/>
+            <parameter key="except_block_type" value="value_matrix_row_start"/>
+            <parameter key="invert_selection" value="true"/>
+            <parameter key="include_special_attributes" value="false"/>
+          </operator>
+          <operator activated="true" class="concurrency:k_means" compatibility="9.9.000" expanded="true" height="82" name="Clustering" width="90" x="246" y="34">
             <parameter key="add_cluster_attribute" value="true"/>
             <parameter key="add_as_label" value="false"/>
             <parameter key="remove_unlabeled" value="false"/>
-            <parameter key="k" value="5"/>
+            <parameter key="k" value="2"/>
             <parameter key="max_runs" value="10"/>
             <parameter key="determine_good_start_values" value="true"/>
             <parameter key="measure_types" value="MixedMeasures"/>
@@ -753,12 +892,11 @@
             <parameter key="use_local_random_seed" value="false"/>
             <parameter key="local_random_seed" value="1992"/>
           </operator>
-          <operator activated="true" class="set_role" compatibility="9.9.000" expanded="true" height="82" name="Set Role" width="90" x="179" y="238">
-            <parameter key="attribute_name" value="Response"/>
-            <parameter key="target_role" value="prediction"/>
-            <list key="set_additional_roles"/>
+          <operator activated="true" class="apply_model" compatibility="9.9.000" expanded="true" height="82" name="Apply Model" width="90" x="380" y="136">
+            <list key="application_parameters"/>
+            <parameter key="create_view" value="false"/>
           </operator>
-          <operator activated="true" class="performance_classification" compatibility="9.9.000" expanded="true" height="82" name="Performance" width="90" x="380" y="238">
+          <operator activated="true" class="performance_classification" compatibility="9.9.000" expanded="true" height="82" name="Performance" width="90" x="581" y="238">
             <parameter key="main_criterion" value="first"/>
             <parameter key="accuracy" value="true"/>
             <parameter key="classification_error" value="false"/>
@@ -785,26 +923,24 @@
             <parameter key="use_example_weights" value="true"/>
             <list key="class_weights"/>
           </operator>
-          <operator activated="true" class="multiply" compatibility="9.9.000" expanded="true" height="103" name="Multiply (2)" width="90" x="380" y="136"/>
-          <connect from_port="input 1" to_op="Multiply" to_port="input"/>
-          <connect from_op="Multiply" from_port="output 1" to_op="Clustering" to_port="example set"/>
-          <connect from_op="Multiply" from_port="output 2" to_op="Set Role" to_port="example set input"/>
-          <connect from_op="Clustering" from_port="cluster model" to_port="model"/>
-          <connect from_op="Clustering" from_port="clustered set" to_op="Multiply (2)" to_port="input"/>
-          <connect from_op="Set Role" from_port="example set output" to_op="Performance" to_port="labelled data"/>
+          <connect from_port="input 1" to_op="Split Data" to_port="example set"/>
+          <connect from_op="Split Data" from_port="partition 1" to_op="Clustering" to_port="example set"/>
+          <connect from_op="Split Data" from_port="partition 2" to_op="Unlabelled Data" to_port="example set input"/>
+          <connect from_op="Unlabelled Data" from_port="example set output" to_op="Apply Model" to_port="unlabelled data"/>
+          <connect from_op="Clustering" from_port="cluster model" to_op="Apply Model" to_port="model"/>
+          <connect from_op="Clustering" from_port="clustered set" to_port="output 1"/>
+          <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
+          <connect from_op="Apply Model" from_port="model" to_port="model"/>
           <connect from_op="Performance" from_port="performance" to_port="performance"/>
-          <connect from_op="Multiply (2)" from_port="output 1" to_port="output 1"/>
-          <connect from_op="Multiply (2)" from_port="output 2" to_port="output 2"/>
           <portSpacing port="source_input 1" spacing="0"/>
           <portSpacing port="source_input 2" spacing="0"/>
           <portSpacing port="sink_performance" spacing="0"/>
           <portSpacing port="sink_model" spacing="0"/>
           <portSpacing port="sink_output 1" spacing="0"/>
           <portSpacing port="sink_output 2" spacing="0"/>
-          <portSpacing port="sink_output 3" spacing="0"/>
         </process>
       </operator>
-      <operator activated="true" class="aggregate" compatibility="9.9.000" expanded="true" height="82" name="Aggregate" width="90" x="447" y="340">
+      <operator activated="true" class="aggregate" compatibility="9.9.000" expanded="true" height="82" name="Aggregate" width="90" x="648" y="289">
         <parameter key="use_default_aggregation" value="false"/>
         <parameter key="attribute_filter_type" value="all"/>
         <parameter key="attribute" value=""/>
@@ -846,79 +982,20 @@
         <parameter key="only_distinct" value="false"/>
         <parameter key="ignore_missings" value="true"/>
       </operator>
-      <operator activated="true" class="read_csv" compatibility="9.9.000" expanded="true" height="68" name="Read CSV" width="90" x="45" y="136">
-        <parameter key="csv_file" value="/Users/michaelgilge/Documents/RapidMiner/Local Repository/processes/step1_preprocessing_clustering/marketing_data.csv"/>
-        <parameter key="column_separators" value=","/>
-        <parameter key="trim_lines" value="false"/>
-        <parameter key="use_quotes" value="true"/>
-        <parameter key="quotes_character" value="&quot;"/>
-        <parameter key="escape_character" value="\"/>
-        <parameter key="skip_comments" value="true"/>
-        <parameter key="comment_characters" value="#"/>
-        <parameter key="starting_row" value="1"/>
-        <parameter key="parse_numbers" value="true"/>
-        <parameter key="decimal_character" value="."/>
-        <parameter key="grouped_digits" value="false"/>
-        <parameter key="grouping_character" value=","/>
-        <parameter key="infinity_representation" value=""/>
-        <parameter key="date_format" value="MM/dd/yyyy"/>
-        <parameter key="first_row_as_names" value="true"/>
-        <list key="annotations"/>
-        <parameter key="time_zone" value="SYSTEM"/>
-        <parameter key="locale" value="English (United States)"/>
-        <parameter key="encoding" value="UTF-8"/>
-        <parameter key="read_all_values_as_polynominal" value="false"/>
-        <list key="data_set_meta_data_information">
-          <parameter key="0" value="ID.true.integer.id"/>
-          <parameter key="1" value="Year_Birth.true.integer.attribute"/>
-          <parameter key="2" value="Education.true.polynominal.attribute"/>
-          <parameter key="3" value="Marital_Status.true.polynominal.attribute"/>
-          <parameter key="4" value="Income .true.polynominal.attribute"/>
-          <parameter key="5" value="Kidhome.true.integer.attribute"/>
-          <parameter key="6" value="Teenhome.true.integer.attribute"/>
-          <parameter key="7" value="Dt_Customer.true.date.attribute"/>
-          <parameter key="8" value="Recency.true.integer.attribute"/>
-          <parameter key="9" value="MntWines.true.integer.attribute"/>
-          <parameter key="10" value="MntFruits.true.integer.attribute"/>
-          <parameter key="11" value="MntMeatProducts.true.integer.attribute"/>
-          <parameter key="12" value="MntFishProducts.true.integer.attribute"/>
-          <parameter key="13" value="MntSweetProducts.true.integer.attribute"/>
-          <parameter key="14" value="MntGoldProds.true.integer.attribute"/>
-          <parameter key="15" value="NumDealsPurchases.true.integer.attribute"/>
-          <parameter key="16" value="NumWebPurchases.true.integer.attribute"/>
-          <parameter key="17" value="NumCatalogPurchases.true.integer.attribute"/>
-          <parameter key="18" value="NumStorePurchases.true.integer.attribute"/>
-          <parameter key="19" value="NumWebVisitsMonth.true.integer.attribute"/>
-          <parameter key="20" value="AcceptedCmp3.true.binominal.attribute"/>
-          <parameter key="21" value="AcceptedCmp4.true.binominal.attribute"/>
-          <parameter key="22" value="AcceptedCmp5.true.binominal.attribute"/>
-          <parameter key="23" value="AcceptedCmp1.true.binominal.attribute"/>
-          <parameter key="24" value="AcceptedCmp2.true.binominal.attribute"/>
-          <parameter key="25" value="Response.true.binominal.label"/>
-          <parameter key="26" value="Complain.true.binominal.attribute"/>
-          <parameter key="27" value="Country.true.polynominal.attribute"/>
-        </list>
-        <parameter key="read_not_matching_values_as_missings" value="false"/>
-      </operator>
-      <connect from_op="Retrieve marketing_data" from_port="output" to_op="Pre-Processing" to_port="in 1"/>
-      <connect from_op="Pre-Processing" from_port="out 1" to_op="Optimized Clustering" to_port="input 1"/>
-      <connect from_op="Optimized Clustering" from_port="performance" to_port="result 1"/>
-      <connect from_op="Optimized Clustering" from_port="model" to_port="result 2"/>
-      <connect from_op="Optimized Clustering" from_port="output 1" to_port="result 3"/>
-      <connect from_op="Optimized Clustering" from_port="output 2" to_op="Aggregate" to_port="example set input"/>
-      <connect from_op="Aggregate" from_port="example set output" to_port="result 5"/>
-      <connect from_op="Read CSV" from_port="output" to_port="result 4"/>
+      <connect from_op="Read CSV" from_port="output" to_op="Pre-Processing" to_port="in 1"/>
+      <connect from_op="Pre-Processing" from_port="out 1" to_op="k-Means Clustering" to_port="example set"/>
+      <connect from_op="k-Means Clustering" from_port="cluster model" to_port="result 1"/>
+      <connect from_op="k-Means Clustering" from_port="clustered set" to_op="Aggregate" to_port="example set input"/>
+      <connect from_op="Aggregate" from_port="example set output" to_port="result 2"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>
       <portSpacing port="sink_result 3" spacing="0"/>
-      <portSpacing port="sink_result 4" spacing="0"/>
-      <portSpacing port="sink_result 5" spacing="0"/>
-      <portSpacing port="sink_result 6" spacing="0"/>
-      <description align="center" color="yellow" colored="true" height="105" resized="false" width="180" x="19" y="266">Jannik</description>
-      <description align="center" color="red" colored="true" height="169" resized="true" width="337" x="227" y="253">Michael&lt;br/&gt;&lt;br/&gt;hier habe ich alle Spalten summiert</description>
-      <description align="center" color="green" colored="true" height="105" resized="false" width="180" x="315" y="441">Ihsan</description>
-      <description align="center" color="gray" colored="true" height="105" resized="false" width="180" x="75" y="426">Zhixun</description>
+      <description align="center" color="yellow" colored="true" height="50" resized="true" width="90" x="14" y="562">Jannik</description>
+      <description align="center" color="red" colored="true" height="50" resized="true" width="91" x="110" y="564">Michael</description>
+      <description align="center" color="green" colored="true" height="50" resized="true" width="90" x="13" y="617">Ihsan</description>
+      <description align="center" color="gray" colored="true" height="50" resized="true" width="90" x="112" y="617">Zhixun</description>
+      <description align="left" color="yellow" colored="false" height="282" resized="true" width="151" x="296" y="166">Data Normalization is very helpful with anything that uses distances.&lt;br&gt;&lt;br&gt;It helps us to normalize the weight of values (especially outliers).&lt;br&gt;&lt;br&gt;Thus we maybe don't even need to remove outliers in this dataset.</description>
     </process>
   </operator>
 </process>

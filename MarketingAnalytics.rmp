@@ -142,7 +142,7 @@
             </process>
             <description align="left" color="yellow" colored="true" width="126">Formatting of the income column.&lt;br&gt;We have: $###,###.##&lt;br&gt;&lt;br&gt;We want: ###.###,##</description>
           </operator>
-          <operator activated="true" class="subprocess" compatibility="9.9.002" expanded="true" height="82" name="Set Attribute Types#1" width="90" x="179" y="34">
+          <operator activated="true" class="subprocess" compatibility="9.9.002" expanded="true" height="82" name="Set Attribute Types" width="90" x="179" y="34">
             <process expanded="true">
               <operator activated="false" class="numerical_to_polynominal" compatibility="9.9.002" expanded="true" height="82" name="ID-&gt;Polynominal" width="90" x="45" y="34">
                 <parameter key="attribute_filter_type" value="single"/>
@@ -246,7 +246,7 @@
             </process>
             <description align="left" color="yellow" colored="true" width="126">There are 3 possible approaches to label our data:&lt;br&gt;- ID as id&lt;br&gt;- Response as label&lt;br&gt;- Response as prediction&lt;br&gt;&lt;br&gt;the 2 latter ones will both be used later on and be switched up sometimes.&lt;br&gt;E.g. the cluster operator does need a prediction label, whereas other models later on do need a label attribute instead.</description>
           </operator>
-          <operator activated="true" class="subprocess" compatibility="9.9.002" expanded="true" height="82" name="Remove Outliers" width="90" x="447" y="34">
+          <operator activated="false" class="subprocess" compatibility="9.9.002" expanded="true" height="82" name="Remove Outliers" width="90" x="447" y="34">
             <process expanded="true">
               <operator activated="true" class="filter_examples" compatibility="9.9.002" expanded="true" height="103" name="R.O. (Year_Birth)" width="90" x="45" y="34">
                 <parameter key="parameter_expression" value=""/>
@@ -355,7 +355,7 @@
             </process>
             <description align="left" color="yellow" colored="true" width="126">Removing of Duplicates and missing values - if existing.</description>
           </operator>
-          <operator activated="true" class="subprocess" compatibility="9.9.002" expanded="true" height="82" name="Discretize Attributes" width="90" x="715" y="34">
+          <operator activated="false" class="subprocess" compatibility="9.9.002" expanded="true" height="82" name="Discretize Attributes" width="90" x="715" y="34">
             <process expanded="true">
               <operator activated="true" class="discretize_by_user_specification" compatibility="9.9.002" expanded="true" height="103" name="Discretize Year_Birth" width="90" x="45" y="34">
                 <parameter key="return_preprocessing_model" value="false"/>
@@ -714,12 +714,10 @@
             <description align="left" color="yellow" colored="true" width="126">Binning and partitioning attributes.</description>
           </operator>
           <connect from_port="in 1" to_op="Syntactical Fixes" to_port="in 1"/>
-          <connect from_op="Syntactical Fixes" from_port="out 1" to_op="Set Attribute Types#1" to_port="in 1"/>
-          <connect from_op="Set Attribute Types#1" from_port="out 1" to_op="Set Role(s)" to_port="in 1"/>
-          <connect from_op="Set Role(s)" from_port="out 1" to_op="Remove Outliers" to_port="in 1"/>
-          <connect from_op="Remove Outliers" from_port="out 1" to_op="Data Cleaning" to_port="in 1"/>
-          <connect from_op="Data Cleaning" from_port="out 1" to_op="Discretize Attributes" to_port="in 1"/>
-          <connect from_op="Discretize Attributes" from_port="out 1" to_port="out 1"/>
+          <connect from_op="Syntactical Fixes" from_port="out 1" to_op="Set Attribute Types" to_port="in 1"/>
+          <connect from_op="Set Attribute Types" from_port="out 1" to_op="Set Role(s)" to_port="in 1"/>
+          <connect from_op="Set Role(s)" from_port="out 1" to_op="Data Cleaning" to_port="in 1"/>
+          <connect from_op="Data Cleaning" from_port="out 1" to_port="out 1"/>
           <portSpacing port="source_in 1" spacing="0"/>
           <portSpacing port="source_in 2" spacing="0"/>
           <portSpacing port="sink_out 1" spacing="0"/>
@@ -735,7 +733,7 @@
               <operator activated="true" class="select_attributes" compatibility="9.9.002" expanded="true" height="82" name="Select User Attributes" width="90" x="45" y="34">
                 <parameter key="attribute_filter_type" value="subset"/>
                 <parameter key="attribute" value=""/>
-                <parameter key="attributes" value="ID|Income|Kidhome|Marital_Status|Teenhome|Year_Birth"/>
+                <parameter key="attributes" value="Income|Kidhome|Marital_Status|Teenhome|Year_Birth"/>
                 <parameter key="use_except_expression" value="false"/>
                 <parameter key="value_type" value="attribute_value"/>
                 <parameter key="use_value_type_exception" value="false"/>
@@ -751,15 +749,13 @@
                   <operator activated="true" class="generate_attributes" compatibility="9.9.002" expanded="true" height="82" name="-&gt;NumberStrings" width="90" x="45" y="34">
                     <list key="function_descriptions">
                       <parameter key="Marital_Status" value="concat(&#10;if(Marital_Status==&quot;Married&quot;, &quot;1&quot;,&#10;if(Marital_Status==&quot;Together&quot;, &quot;2&quot;, &#10;if(Marital_Status==&quot;Widow&quot;, &quot;3&quot;,&#10;if(Marital_Status==&quot;Divorced&quot;, &quot;4&quot;,&#10;if(Marital_Status==&quot;Single&quot;, &quot;5&quot;, &#10;if(Marital_Status==&quot;Alone&quot;, &quot;6&quot;,&#10;if(Marital_Status==&quot;YOLO&quot;, &quot;7&quot;, &#10;if(Marital_Status==&quot;Absurd&quot;, &quot;7&quot;, &quot;-1&quot;))))))))&#10;)"/>
-                      <parameter key="Year_Birth" value="concat(&#10;if(Year_Birth==&quot;adult&quot;, &quot;4&quot;,&#10;if(Year_Birth==&quot;adv_age&quot;, &quot;3&quot;, &#10;if(Year_Birth==&quot;mature&quot;, &quot;2&quot;,&#10;if(Year_Birth==&quot;young_mat&quot;, &quot;1&quot;, &quot;-1&quot;))))&#10;)"/>
-                      <parameter key="Income" value="concat(&#10;if(Income==&quot;bottom&quot;, &quot;1&quot;, &#10;if(Income==&quot;low&quot;, &quot;2&quot;,&#10;if(Income==&quot;middle&quot;, &quot;3&quot;, &#10;if(Income==&quot;high&quot;, &quot;4&quot;,&#10;if(Income==&quot;top&quot;, &quot;5&quot;, &quot;-1&quot;)))))&#10;)"/>
                     </list>
                     <parameter key="keep_all" value="true"/>
                   </operator>
                   <operator activated="true" class="parse_numbers" compatibility="9.9.002" expanded="true" height="82" name="Parse Numbers" width="90" x="179" y="34">
                     <parameter key="attribute_filter_type" value="subset"/>
                     <parameter key="attribute" value=""/>
-                    <parameter key="attributes" value="Income|Marital_Status|Year_Birth"/>
+                    <parameter key="attributes" value="Marital_Status"/>
                     <parameter key="use_except_expression" value="false"/>
                     <parameter key="value_type" value="nominal"/>
                     <parameter key="use_value_type_exception" value="false"/>
@@ -775,6 +771,15 @@
                     <parameter key="infinity_representation" value=""/>
                     <parameter key="unparsable_value_handling" value="fail"/>
                   </operator>
+                  <operator activated="false" class="generate_attributes" compatibility="9.9.002" expanded="true" height="82" name="-&gt;NumberStrings (2)" width="90" x="45" y="136">
+                    <list key="function_descriptions">
+                      <parameter key="Marital_Status" value="concat(&#10;if(Marital_Status==&quot;Married&quot;, &quot;1&quot;,&#10;if(Marital_Status==&quot;Together&quot;, &quot;2&quot;, &#10;if(Marital_Status==&quot;Widow&quot;, &quot;3&quot;,&#10;if(Marital_Status==&quot;Divorced&quot;, &quot;4&quot;,&#10;if(Marital_Status==&quot;Single&quot;, &quot;5&quot;, &#10;if(Marital_Status==&quot;Alone&quot;, &quot;6&quot;,&#10;if(Marital_Status==&quot;YOLO&quot;, &quot;7&quot;, &#10;if(Marital_Status==&quot;Absurd&quot;, &quot;7&quot;, &quot;-1&quot;))))))))&#10;)"/>
+                      <parameter key="Year_Birth" value="concat(&#10;if(Year_Birth==&quot;adult&quot;, &quot;4&quot;,&#10;if(Year_Birth==&quot;adv_age&quot;, &quot;3&quot;, &#10;if(Year_Birth==&quot;mature&quot;, &quot;2&quot;,&#10;if(Year_Birth==&quot;young_mat&quot;, &quot;1&quot;, &quot;-1&quot;))))&#10;)"/>
+                      <parameter key="Income" value="concat(&#10;if(Income==&quot;bottom&quot;, &quot;1&quot;, &#10;if(Income==&quot;low&quot;, &quot;2&quot;,&#10;if(Income==&quot;middle&quot;, &quot;3&quot;, &#10;if(Income==&quot;high&quot;, &quot;4&quot;,&#10;if(Income==&quot;top&quot;, &quot;5&quot;, &quot;-1&quot;)))))&#10;)"/>
+                    </list>
+                    <parameter key="keep_all" value="true"/>
+                    <description align="center" color="yellow" colored="true" width="126">use this when we use binning before clustering.</description>
+                  </operator>
                   <connect from_port="in 1" to_op="-&gt;NumberStrings" to_port="example set input"/>
                   <connect from_op="-&gt;NumberStrings" from_port="example set output" to_op="Parse Numbers" to_port="example set input"/>
                   <connect from_op="Parse Numbers" from_port="example set output" to_port="out 1"/>
@@ -784,11 +789,11 @@
                   <portSpacing port="sink_out 2" spacing="0"/>
                 </process>
               </operator>
-              <operator activated="true" class="concurrency:k_means" compatibility="9.9.002" expanded="true" height="82" name="k-Means" width="90" x="313" y="34">
+              <operator activated="true" class="concurrency:k_means" compatibility="9.9.002" expanded="true" height="82" name="k-Means" width="90" x="313" y="85">
                 <parameter key="add_cluster_attribute" value="true"/>
                 <parameter key="add_as_label" value="false"/>
                 <parameter key="remove_unlabeled" value="false"/>
-                <parameter key="k" value="5"/>
+                <parameter key="k" value="25"/>
                 <parameter key="max_runs" value="10"/>
                 <parameter key="determine_good_start_values" value="true"/>
                 <parameter key="measure_types" value="NumericalMeasures"/>
@@ -805,6 +810,33 @@
                 <parameter key="kernel_shift" value="1.0"/>
                 <parameter key="kernel_a" value="1.0"/>
                 <parameter key="kernel_b" value="0.0"/>
+                <parameter key="max_optimization_steps" value="100"/>
+                <parameter key="use_local_random_seed" value="false"/>
+                <parameter key="local_random_seed" value="1992"/>
+              </operator>
+              <operator activated="false" class="x_means" compatibility="9.9.002" expanded="true" height="82" name="X-Means" width="90" x="246" y="187">
+                <parameter key="add_cluster_attribute" value="true"/>
+                <parameter key="add_as_label" value="false"/>
+                <parameter key="remove_unlabeled" value="false"/>
+                <parameter key="k_min" value="3"/>
+                <parameter key="k_max" value="60"/>
+                <parameter key="determine_good_start_values" value="true"/>
+                <parameter key="measure_types" value="NumericalMeasures"/>
+                <parameter key="mixed_measure" value="MixedEuclideanDistance"/>
+                <parameter key="nominal_measure" value="NominalDistance"/>
+                <parameter key="numerical_measure" value="EuclideanDistance"/>
+                <parameter key="divergence" value="GeneralizedIDivergence"/>
+                <parameter key="kernel_type" value="radial"/>
+                <parameter key="kernel_gamma" value="1.0"/>
+                <parameter key="kernel_sigma1" value="1.0"/>
+                <parameter key="kernel_sigma2" value="0.0"/>
+                <parameter key="kernel_sigma3" value="2.0"/>
+                <parameter key="kernel_degree" value="3.0"/>
+                <parameter key="kernel_shift" value="1.0"/>
+                <parameter key="kernel_a" value="1.0"/>
+                <parameter key="kernel_b" value="0.0"/>
+                <parameter key="clustering_algorithm" value="KMeans"/>
+                <parameter key="max_runs" value="10"/>
                 <parameter key="max_optimization_steps" value="100"/>
                 <parameter key="use_local_random_seed" value="false"/>
                 <parameter key="local_random_seed" value="1992"/>
@@ -831,12 +863,12 @@
               <portSpacing port="sink_out 4" spacing="0"/>
             </process>
           </operator>
-          <operator activated="true" class="subprocess" compatibility="9.9.002" expanded="true" height="82" name="Get ClusterResult" width="90" x="313" y="85">
+          <operator activated="true" class="subprocess" compatibility="9.9.002" expanded="true" height="103" name="Get ClusterResult" width="90" x="313" y="85">
             <process expanded="true">
               <operator activated="true" class="numerical_to_polynominal" compatibility="9.9.002" expanded="true" height="82" name="Numerical to Polynominal" width="90" x="112" y="34">
                 <parameter key="attribute_filter_type" value="subset"/>
                 <parameter key="attribute" value=""/>
-                <parameter key="attributes" value="Income|Kidhome|Teenhome|Marital_Status|Year_Birth"/>
+                <parameter key="attributes" value="Kidhome|Marital_Status|Teenhome"/>
                 <parameter key="use_except_expression" value="false"/>
                 <parameter key="value_type" value="numeric"/>
                 <parameter key="use_value_type_exception" value="false"/>
@@ -849,15 +881,13 @@
               </operator>
               <operator activated="true" class="generate_attributes" compatibility="9.9.002" expanded="true" height="82" name="Reverse Binning" width="90" x="313" y="34">
                 <list key="function_descriptions">
-                  <parameter key="Income" value="concat(&#10;if(Income==1, &quot;bottom&quot;,&#10;if(Income==2, &quot;low&quot;,&#10;if(Income==3, &quot;middle&quot;,&#10;if(Income==4, &quot;high&quot;,&#10;if(Income==5, &quot;top&quot;, &quot;NaN&quot;))))))"/>
                   <parameter key="Marital" value="concat(&#10;if(Marital_Status==1, &quot;Married&quot;,&#10;if(Marital_Status==2, &quot;Together&quot;,&#10;if(Marital_Status==3, &quot;Divorced&quot;,&#10;if(Marital_Status==4, &quot;Single&quot;,&#10;if(Marital_Status==5, &quot;Alone&quot;,&#10;if(Marital_Status==6, &quot;YOLO&quot;,&#10;if(Marital_Status==7, &quot;Absurd&quot;,&quot;NaN&quot;))))))))"/>
-                  <parameter key="Year_Birth" value="concat(&#10;if(Year_Birth==1, &quot;young_mat&quot;,&#10;if(Year_Birth==2, &quot;mature&quot;,&#10;if(Year_Birth==3, &quot;adv_age&quot;,&#10;if(Year_Birth==4, &quot;adult&quot;, &quot;NaN&quot;)))))"/>
                 </list>
                 <parameter key="keep_all" value="true"/>
               </operator>
               <operator activated="true" class="generate_attributes" compatibility="9.9.002" expanded="true" height="82" name="Append Cluster Attr." width="90" x="514" y="34">
                 <list key="function_descriptions">
-                  <parameter key="UserSpecificClusterAttributes" value="concat(&quot;{&quot;,&#10;&quot;Age: &quot;, Year_Birth, &quot;,&quot;,&#10;&quot; Marital: &quot;, Marital_Status, &quot;,&quot;,&#10;&quot; Inc.: &quot;, Income, &quot;,&quot;,&#10;&quot; Kids: &quot;, Kidhome, &quot;,&quot;,&#10;&quot; Teens: &quot;, Teenhome, &quot;,&quot;,&#10;&quot;}&quot;&#10;)"/>
+                  <parameter key="UserSpecificClusterAttributes" value="concat(&quot;{&quot;,&#10;&quot;Birth: &quot;, str(Year_Birth), &quot;,&quot;,&#10;&quot; Marital: &quot;, Marital_Status, &quot;,&quot;,&#10;&quot; Income: &quot;, str(Income), &quot;,&quot;,&#10;&quot; Kids: &quot;, Kidhome, &quot;,&quot;,&#10;&quot; Teens: &quot;, Teenhome, &quot;,&quot;,&#10;&quot;}&quot;&#10;)"/>
                 </list>
                 <parameter key="keep_all" value="true"/>
               </operator>
@@ -869,6 +899,16 @@
                   <parameter key="CampaignSpecificClusteringData" value="concat(&quot;{&quot;,&#10;&quot;Cmp1: &quot;, AcceptedCmp1, &quot;,&quot;,&#10;&quot; Cmp2: &quot;, AcceptedCmp2, &quot;,&quot;,&#10;&quot; Cmp3: &quot;, AcceptedCmp3, &quot;,&quot;,&#10;&quot; Cmp4: &quot;, AcceptedCmp4, &quot;,&quot;,&#10;&quot; Cmp5: &quot;, AcceptedCmp5, &quot;,&quot;,&#10;&quot; Response: &quot;, Response,&#10;&quot;}&quot;&#10;)"/>
                 </list>
                 <parameter key="keep_all" value="true"/>
+                <description align="center" color="yellow" colored="true" width="126">use this when we use binning before clustering.</description>
+              </operator>
+              <operator activated="false" class="generate_attributes" compatibility="9.9.002" expanded="true" height="82" name="Reverse Binning (2)" width="90" x="313" y="187">
+                <list key="function_descriptions">
+                  <parameter key="Income" value="concat(&#10;if(Income==1, &quot;bottom&quot;,&#10;if(Income==2, &quot;low&quot;,&#10;if(Income==3, &quot;middle&quot;,&#10;if(Income==4, &quot;high&quot;,&#10;if(Income==5, &quot;top&quot;, &quot;NaN&quot;))))))"/>
+                  <parameter key="Marital" value="concat(&#10;if(Marital_Status==1, &quot;Married&quot;,&#10;if(Marital_Status==2, &quot;Together&quot;,&#10;if(Marital_Status==3, &quot;Divorced&quot;,&#10;if(Marital_Status==4, &quot;Single&quot;,&#10;if(Marital_Status==5, &quot;Alone&quot;,&#10;if(Marital_Status==6, &quot;YOLO&quot;,&#10;if(Marital_Status==7, &quot;Absurd&quot;,&quot;NaN&quot;))))))))"/>
+                  <parameter key="Year_Birth" value="concat(&#10;if(Year_Birth==1, &quot;young_mat&quot;,&#10;if(Year_Birth==2, &quot;mature&quot;,&#10;if(Year_Birth==3, &quot;adv_age&quot;,&#10;if(Year_Birth==4, &quot;adult&quot;, &quot;NaN&quot;)))))"/>
+                </list>
+                <parameter key="keep_all" value="true"/>
+                <description align="center" color="yellow" colored="true" width="126">use this when we use binning before clustering.</description>
               </operator>
               <connect from_port="in 1" to_op="Numerical to Polynominal" to_port="example set input"/>
               <connect from_op="Numerical to Polynominal" from_port="example set output" to_op="Reverse Binning" to_port="example set input"/>
@@ -876,8 +916,10 @@
               <connect from_op="Append Cluster Attr." from_port="example set output" to_port="out 1"/>
               <portSpacing port="source_in 1" spacing="0"/>
               <portSpacing port="source_in 2" spacing="0"/>
+              <portSpacing port="source_in 3" spacing="0"/>
               <portSpacing port="sink_out 1" spacing="0"/>
               <portSpacing port="sink_out 2" spacing="0"/>
+              <portSpacing port="sink_out 3" spacing="0"/>
             </process>
           </operator>
           <operator activated="true" class="select_attributes" compatibility="9.9.002" expanded="true" height="82" name="Select Attributes (3)" width="90" x="581" y="136">
@@ -897,8 +939,9 @@
           <connect from_port="in 1" to_op="Cluster Clust. Groups" to_port="in 1"/>
           <connect from_op="Cluster Clust. Groups" from_port="out 1" to_port="out 2"/>
           <connect from_op="Cluster Clust. Groups" from_port="out 2" to_op="Get ClusterResult" to_port="in 1"/>
-          <connect from_op="Cluster Clust. Groups" from_port="out 3" to_port="out 3"/>
+          <connect from_op="Cluster Clust. Groups" from_port="out 3" to_op="Get ClusterResult" to_port="in 2"/>
           <connect from_op="Get ClusterResult" from_port="out 1" to_op="Select Attributes (3)" to_port="example set input"/>
+          <connect from_op="Get ClusterResult" from_port="out 2" to_port="out 3"/>
           <connect from_op="Select Attributes (3)" from_port="example set output" to_port="out 1"/>
           <portSpacing port="source_in 1" spacing="0"/>
           <portSpacing port="source_in 2" spacing="0"/>
@@ -911,7 +954,7 @@
         </process>
       </operator>
       <operator activated="true" class="multiply" compatibility="9.9.002" expanded="true" height="124" name="Multiply" width="90" x="514" y="238"/>
-      <operator activated="true" class="subprocess" compatibility="9.9.002" expanded="true" height="145" name="Michael" width="90" x="849" y="442">
+      <operator activated="true" class="subprocess" compatibility="9.9.002" expanded="true" height="145" name="Michael" width="90" x="782" y="442">
         <process expanded="true">
           <operator activated="true" class="set_role" compatibility="9.9.002" expanded="true" height="82" name="Set Role (2)" width="90" x="581" y="34">
             <parameter key="attribute_name" value="Response"/>
@@ -1496,7 +1539,7 @@
           <portSpacing port="sink_out 5" spacing="0"/>
         </process>
       </operator>
-      <operator activated="true" class="subprocess" compatibility="9.9.002" expanded="true" height="82" name="cluster-&gt;id" width="90" x="849" y="238">
+      <operator activated="false" class="subprocess" compatibility="9.9.002" expanded="true" height="82" name="cluster-&gt;id" width="90" x="849" y="238">
         <process expanded="true">
           <operator activated="true" class="blending:pivot" compatibility="9.9.002" expanded="true" height="82" name="Pivot" width="90" x="45" y="34">
             <parameter key="group_by_attributes" value="cluster|ID"/>
@@ -1665,20 +1708,35 @@
           <portSpacing port="sink_out 1" spacing="0"/>
           <portSpacing port="sink_out 2" spacing="0"/>
         </process>
+        <description align="center" color="yellow" colored="true" width="126">nur verwendbar bei k=5</description>
+      </operator>
+      <operator activated="true" class="write_csv" compatibility="9.9.002" expanded="true" height="82" name="Write CSV" width="90" x="715" y="187">
+        <parameter key="column_separator" value=";"/>
+        <parameter key="write_attribute_names" value="true"/>
+        <parameter key="quote_nominal_values" value="true"/>
+        <parameter key="format_date_attributes" value="true"/>
+        <parameter key="append_to_file" value="false"/>
+        <parameter key="encoding" value="SYSTEM"/>
+      </operator>
+      <operator activated="true" class="write_file" compatibility="9.9.002" expanded="true" height="68" name="Write File" width="90" x="648" y="442">
+        <parameter key="resource_type" value="file"/>
+        <parameter key="filename" value="/Users/jannik/Documents/Studium/Sem06_SS21/Web_und_Social_Media_Mining/Repo/marketing_analytics/table_clustering.csv"/>
+        <parameter key="mime_type" value="application/octet-stream"/>
       </operator>
       <connect from_op="Read marketing data" from_port="output" to_op="Pre-Processing" to_port="in 1"/>
       <connect from_op="Pre-Processing" from_port="out 1" to_op="Clustering" to_port="in 1"/>
       <connect from_op="Clustering" from_port="out 1" to_op="Multiply" to_port="input"/>
       <connect from_op="Clustering" from_port="out 2" to_port="result 1"/>
       <connect from_op="Clustering" from_port="out 3" to_port="result 2"/>
-      <connect from_op="Multiply" from_port="output 1" to_op="cluster-&gt;id" to_port="in 1"/>
-      <connect from_op="Multiply" from_port="output 2" to_port="result 4"/>
-      <connect from_op="Multiply" from_port="output 3" to_op="Michael" to_port="in 1"/>
-      <connect from_op="Michael" from_port="out 1" to_port="result 5"/>
-      <connect from_op="Michael" from_port="out 2" to_port="result 6"/>
-      <connect from_op="Michael" from_port="out 3" to_port="result 7"/>
-      <connect from_op="Michael" from_port="out 4" to_port="result 8"/>
-      <connect from_op="cluster-&gt;id" from_port="out 1" to_port="result 3"/>
+      <connect from_op="Multiply" from_port="output 1" to_port="result 3"/>
+      <connect from_op="Multiply" from_port="output 2" to_op="Michael" to_port="in 1"/>
+      <connect from_op="Multiply" from_port="output 3" to_op="Write CSV" to_port="input"/>
+      <connect from_op="Michael" from_port="out 1" to_port="result 4"/>
+      <connect from_op="Michael" from_port="out 2" to_port="result 5"/>
+      <connect from_op="Michael" from_port="out 3" to_port="result 6"/>
+      <connect from_op="Michael" from_port="out 4" to_port="result 7"/>
+      <connect from_op="Write CSV" from_port="file" to_op="Write File" to_port="file"/>
+      <connect from_op="Write File" from_port="file" to_port="result 8"/>
       <portSpacing port="source_input 1" spacing="0"/>
       <portSpacing port="sink_result 1" spacing="0"/>
       <portSpacing port="sink_result 2" spacing="0"/>

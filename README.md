@@ -1,2 +1,2 @@
-# marketing_analytics
-data mining project of marketing analytics
+# Marketing Analytics
+Marketing analytics data mining project using RapidMiner
